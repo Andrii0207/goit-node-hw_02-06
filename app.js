@@ -5,7 +5,6 @@ const moment = require("moment");
 const fs = require("fs/promises");
 
 const contactsRouter = require("./routes/api/contacts");
-const contacts = require("./models/contacts.json");
 
 const app = express();
 
@@ -22,16 +21,6 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.use("api/contacts/", contactsRouter);
-
-app.get("/", (req, res) => {
-  res.send("<h2>Home page</h2>");
-});
-
-app.get("/contacts", (req, res) => {
-  res.send(contacts);
-});
-
 app.use("/api/contacts", contactsRouter);
 
 app.use((req, res) => {
@@ -39,7 +28,8 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(500).json({ message: err.message });
+  const { status = 500, message = "Server error" } = err;
+  res.status(status).json({ message: err.message });
 });
 
 module.exports = app;
