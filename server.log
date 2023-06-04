@@ -239,3 +239,6 @@ GET /api/contacts/ 04-06-2023_08:55:05
 PUT /api/contacts/1 04-06-2023_08:55:16
 PUT /api/contacts/641211e4-6d4d-4665-8aeb-75528d116b37 04-06-2023_08:55:24
 GET /api/contacts/ 04-06-2023_08:55:35
+GET /api/contacts 04-06-2023_08:58:26
+GET /api/contacts/641211e4-6d4d-4665-8aeb-75528d116b37 04-06-2023_08:58:45
+DELETE /api/contacts/641211e4-6d4d-4665-8aeb-75528d116b37 04-06-2023_09:10:42

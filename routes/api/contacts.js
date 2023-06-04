@@ -1,25 +1,10 @@
-const { v4 } = require("uuid");
 const createError = require("http-errors");
-// const Joi = require("joi");
-// const { NotFound } = require("http-errors");
+
 const express = require("express");
 const router = express.Router();
 
 const contactsOperations = require("../../models/contacts");
 const contactsSchema = require("../../contactsSchema");
-// const contactsSchema = Joi.object({
-//   name: Joi.string().required(),
-//   email: Joi.string().required(),
-//   phone: Joi.string().required(),
-// });
-
-/*
-1. Получить все контакты
-2. Получить один контакт по id
-3. Добавить контакт
-4. Обновить сонтакт по id
-5. Удалить сонтакт по id
-*/
 
 // GET /api/contacts
 router.get("/", async (req, res, next) => {
@@ -45,11 +30,6 @@ router.get("/:contactId", async (req, res, next) => {
 
     if (!result) {
       throw createError(404, `Product with id=${contactId} not found`);
-      // throw new NotFound(`Product with id=${contactId} not found`);
-
-      // const error = new Error(`Product with id=${contactId} not found`);
-      // error.status = 404;
-      // throw error;
     }
     res.json({
       status: "success",
@@ -83,15 +63,6 @@ router.post("/", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
-  // const newContact = { ...req.body, id: v4() };
-  // contacts.push(newContact);
-  // res.status(201).json({
-  //   status: "success",
-  //   code: 201,
-  //   data: { result: newContact },
-  // });
-  // console.log(newContact);
 });
 
 router.delete("/:contactId", async (req, res, next) => {
@@ -125,7 +96,6 @@ router.put("/:id", async (req, res, next) => {
     }
     const { id } = req.params;
     const updatedContact = await contactsOperations.updateContact(id, req.body);
-    console.log(updatedContact);
 
     if (!updatedContact) {
       throw createError(404, `Product with id=${id} not found`);
