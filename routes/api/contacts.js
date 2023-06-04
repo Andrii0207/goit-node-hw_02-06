@@ -95,21 +95,42 @@ router.post("/", async (req, res, next) => {
 });
 
 router.delete("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+  try {
+    const { contactId } = req.params;
+    const deletedContact = await contactsOperations.removeContact(contactId);
+
+    if (!deletedContact) {
+      throw createError(404, `Product with id=${contactId} not found`);
+    }
+
+    res.json({
+      status: "success",
+      code: 200,
+      message: "Product deleted",
+      data: {
+        result: deletedContact,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.put("/:contactId", async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   const { error } = contactsSchema.validate(req.body);
   try {
     if (error) {
       error.status = 400;
       throw error;
     }
-    const { contactId } = req.params;
-    const updatedContact = contactsOperations.updateContact(
-      contactId,
-      req.body
-    );
+    const { id } = req.params;
+    const updatedContact = await contactsOperations.updateContact(id, req.body);
+    console.log(updatedContact);
+
+    if (!updatedContact) {
+      throw createError(404, `Product with id=${id} not found`);
+    }
+
     res.json({
       status: "success",
       code: 200,
