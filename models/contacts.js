@@ -19,7 +19,7 @@ const listContacts = async () => {
  * @param {string} contactId
  **/
 
-const getContactById = async (contactId) => {
+const getById = async (contactId) => {
   const contacts = await listContacts();
   const result = contacts.find((item) => item.id === contactId);
   return result;
@@ -52,7 +52,7 @@ const removeContact = async (id) => {
  * @param {object} body
  **/
 
-const addContact = async (body) => {
+const createContact = async (body) => {
   const contacts = await listContacts();
   const newContact = { id: uuidv4(), ...body };
   contacts.push(newContact);
@@ -70,7 +70,7 @@ const addContact = async (body) => {
  * @param {object} body
  **/
 
-const updateContact = async (id, body) => {
+const updContact = async (id, body) => {
   const contacts = await listContacts();
 
   const idx = contacts.findIndex((item) => item.id === id);
@@ -85,8 +85,8 @@ const updateContact = async (id, body) => {
 
 module.exports = {
   listContacts,
-  getContactById,
+  getById,
   removeContact,
-  addContact,
-  updateContact,
+  createContact,
+  updContact,
 };
